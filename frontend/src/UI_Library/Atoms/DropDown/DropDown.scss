@@ -1,0 +1,76 @@
+button{
+    cursor: pointer;
+    background-color: white;
+    border: solid rgba(0, 0, 0, 0.1) 1px;
+    border-radius: 10px;
+    height: 50px;
+    padding: 10px;
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    p{
+        color:rgba(0, 0, 0, 0.8);
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+button:hover{
+    border:solid rgb(7, 74, 175) 1px;
+}
+
+.dropDown{
+    margin: 10px;
+    padding: 0;
+    .drop_btn{
+        width:270px;
+        .up-down_img{
+            opacity: 0.2;
+            height: 20px;
+        }
+        .close_img{
+            height: 25px;
+        }
+    }
+    .drop_btn_active{
+        border:solid rgb(7, 74, 175) 1px;
+        p{
+            color:rgba(0, 0, 0, 1);
+        }
+    }
+    .drop{
+        overflow: auto;
+        margin-top: 5px;
+        border: solid rgba(0, 0, 0, 0.1) 1px;
+        background-color: white;
+        border-radius: 10px;
+        width:268px;
+        max-height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        position: absolute;
+        z-index: 1;
+        .drop_item{
+            border: 0;
+            border-radius: 0;
+            img{
+                height: 25px;
+            }
+        }
+        .drop_item-active{
+            background-color: rgba(20, 34, 228, 0.034);
+        }
+    }
+    .drop::-webkit-scrollbar {
+        width: 6px;
+        background-color: #f9f9fd;
+    }
+    .drop::-webkit-scrollbar-thumb {
+        background-color: #9c9c9c57;
+    }
+}

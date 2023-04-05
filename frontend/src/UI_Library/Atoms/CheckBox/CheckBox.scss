@@ -1,0 +1,30 @@
+.checkBox{
+    .switch-btn {
+        display: inline-block;
+        width: 45px; /* ширина */
+        height: 20px; /* высота */
+        border-radius: 20px; /* радиус скругления */
+        background: #8f8e8e; /* цвет фона */
+        border: none;
+        cursor: pointer;
+        position: relative;
+        transition-duration: 300ms; /* анимация */
+      }
+      .switch-btn::after {
+        content: "";
+        height: 16px; /* высота кнопки */
+        width: 16px; /* ширина кнопки */
+        border-radius: 16px;
+        background: #ffffff; /* цвет кнопки */
+        top: 2px; /* положение кнопки по вертикали относительно основы */
+        left: 2px; /* положение кнопки по горизонтали относительно основы */
+        transition-duration: 300ms; /* анимация */
+        position: absolute;
+      }
+      .switch-on {
+        background: #0049b7;
+      }
+      .switch-on::after {
+        left: 26px;
+      }
+}

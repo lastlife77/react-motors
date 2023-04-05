@@ -1,0 +1,61 @@
+.sliderFilter{
+    margin: 10px;
+    .sliderFilter_btn{
+        width: 270px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items:flex-start;
+        .title{
+            p{
+                font-size: 10px;
+                color:rgba(72, 73, 77, 0.5);
+                margin: 0;
+                padding: 0;
+            }
+            
+        }
+        .min_max{
+            width: 250px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            input{
+                width:70px;
+                border:none;
+                outline:none;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+            p{
+                font-size: 14px;
+                color: rgb(0, 0, 0);
+                margin: 0;
+                padding: 0;
+                margin-right: 5px;
+            }
+            .min{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+            }
+            .max{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+            }
+        }
+        .slider{
+            align-self: stretch;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            input{
+                width: 110px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+              
+        }
+    }
+}

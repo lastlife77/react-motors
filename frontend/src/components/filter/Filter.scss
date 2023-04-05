@@ -1,0 +1,176 @@
+.filter-wrapper{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin: 20px;
+    width: 1200px;
+    height:fit-content;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    .filter-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        .header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 15px;
+            .new-old{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                .block{
+                    cursor: pointer;
+                    height: fit-content;
+                    p{
+                        margin: 0 15px 15px 15px;
+                        padding: 0;
+                        font-size: 20px;
+                        font-family: 'Roboto-Medium', sans-serif;
+                        color:rgba(0, 0, 0, 0.6);
+                        
+                    }
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+                }
+                .active{
+                    p{
+                        color:rgba(0, 0, 0, 1);
+                        
+                    }
+                    border-bottom: 2px solid;
+                    border-image: linear-gradient(90deg,blue,red) 10;
+                }
+            }
+            .express-expert{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                p{
+                    margin: 15px;
+                    font-size: 18px;
+                    font-family: 'Roboto-Medium', sans-serif;
+                    color:#48494d;
+                }
+            }
+        }
+        .main{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            .default{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-start;              
+                p{
+                    font-family: 'Roboto-Regular', sans-serif;
+                }
+                .inactive{
+                    pointer-events: none;
+                    p{
+                        opacity: 0.3;
+                    }
+                }
+                
+            }
+            .extended{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                p{
+                    font-family: 'Roboto-Regular', sans-serif;
+                }
+
+                animation-duration: 0.5s;
+                animation-name: slidein;
+            }
+            .extended-hidden{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                p{
+                    font-family: 'Roboto-Regular', sans-serif;
+                }
+                display: none;
+            }
+            @keyframes slidein {
+                from {
+                    margin-top: -10%;
+                }
+              
+                to {
+                    margin-top: 0%;
+                }
+              }
+              @keyframes slideout {
+                0%{
+                    opacity: 1;
+                    height: 100%;
+                }
+                100%{
+                    opacity: 0;
+                    height: 0%;
+                }
+              }
+        }
+        .footer{
+            margin: 15px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-right:40px;
+
+            .footer_block{
+                margin: 10px;
+            }
+            .reset{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                p{
+                    font-size: 16px;
+                    font-family: 'Roboto-Regular', sans-serif;
+                    color:rgba(66, 59, 59, 0.3);
+
+                    border-bottom: 1px rgba(66, 59, 59, 0.3) solid;
+                }
+                
+            }
+            .reset:hover{
+                p{
+                    border: none;
+                }
+                
+            }
+            .show{
+                button{
+                    background-color:#0049b7;
+                    height:50px;
+                    width:250px;
+                    padding: 20px;
+                    border-radius: 0;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    p{
+                        
+                        font-family: 'Roboto-Bold', sans-serif;
+                        font-size: 14px;
+                        color:white;
+                    }
+                }
+            }
+            
+        }
+    }
+}
