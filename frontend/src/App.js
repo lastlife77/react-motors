@@ -1,45 +1,48 @@
 import "./App.scss";
-import AutoCard from "./components/autoCard/AutoCard";
-import AutoPage from "./components/autoPage/AutoPage";
-import Filter from "./components/filter/Filter";
-import CheckBox from "./UI_Library/Atoms/CheckBox/CheckBox";
-import DropDown from "./UI_Library/Atoms/DropDown/DropDown";
-import Slider from "./UI_Library/Atoms/Slider/Slider";
-import auto1 from "./UI_Library/img/auto1.jpg";
-import auto2 from "./UI_Library/img/auto2.jpg";
-import auto3 from "./UI_Library/img/auto3.jpg";
+import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import MainPage from "./pages/MainPage/MainPage";
+import Header from "./components/header/Header";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import AdminAutoPage from "./pages/AdminPages/AdminAutoPage/AdminAutoPage";
+import AdminCarBodyPage from "./pages/AdminPages/AdminCarBodyPage/AdminCarBodyPage";
+import AdminCarBrandPage from "./pages/AdminPages/AdminCarBrandPage/AdminCarBrandPage";
+import AdminCarDrivePage from "./pages/AdminPages/AdminCarDrivePage/AdminCarDrivePage";
+import AdminCarEnginePage from "./pages/AdminPages/AdminCarEnginePage/AdminCarEnginePage";
+import AdminCarEngineTypePage from "./pages/AdminPages/AdminCarEngineTypePage/AdminCarEngineTypePage";
+import AdminCarModelPage from "./pages/AdminPages/AdminCarModelPage/AdminCarModelPage";
+import AdminCarTransmissionPage from "./pages/AdminPages/AdminCarTransmissionPage/AdminCarTransmissionPage";
+import AdminCountryPage from "./pages/AdminPages/AdminCountryPage/AdminCountryPage";
+
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAuthMe, isAuth } from "./redux/slices/user";
 
 function App() {
-  let items = [
-    "bmw",
-    "audi",
-    "porsche",
-    "bmw",
-    "audi",
-    "porsche",
-    "bmw",
-    "audi",
-    "porsche",
-    "bmw",
-    "audi",
-    "porsche",
-  ];
+  const dispatch = useDispatch();
+  let userIsAuth = useSelector(isAuth);
 
-  let images = [auto1, auto2, auto3];
+  useEffect(() => {
+    dispatch(fetchAuthMe());
+  }, []);
 
   return (
     <div className="App">
-      <Filter></Filter>
-      <AutoCard
-        image="auto1.jpg"
-        name="Hyundai PALISADE"
-        price="6 532 420"
-        characteristics="АКПП, полный привод, 3.5 л., бензиновый, 2022 г.в., внедорожник"
-      ></AutoCard>
-      <AutoPage
-        title="Москвич 3 M03-1A-E1-G01-C0-F-5"
-        images={images}
-      ></AutoPage>
+      <Header></Header>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/auto" element={<AdminAutoPage />} />
+        <Route path="/carBody" element={<AdminCarBodyPage />} />
+        <Route path="/carBrand" element={<AdminCarBrandPage />} />
+        <Route path="/carDrive" element={<AdminCarDrivePage />} />
+        <Route path="/carEngine" element={<AdminCarEnginePage />} />
+        <Route path="/carEngineType" element={<AdminCarEngineTypePage />} />
+        <Route path="/carModel" element={<AdminCarModelPage />} />
+        <Route path="/carTransmission" element={<AdminCarTransmissionPage />} />
+        <Route path="/country" element={<AdminCountryPage />} />
+      </Routes>
     </div>
   );
 }

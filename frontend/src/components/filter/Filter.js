@@ -98,9 +98,6 @@ function Filter(props) {
             {!isNewAuto ? (
               <DropDownMany items={carAccidents}></DropDownMany>
             ) : undefined}
-            {!isNewAuto ? (
-              <DropDownMany items={carAccidents}></DropDownMany>
-            ) : undefined}
             <SliderFilter
               title="Цена, руб"
               min={737500}
