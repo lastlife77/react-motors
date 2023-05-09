@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./../../axios";
 
-export const fetchAutos = createAsyncThunk("/autos/fetchAutos", async () => {
-  const { data } = await axios.get("/auto");
-  return data;
-});
+export const fetchAutos = createAsyncThunk(
+  "/autos/fetchAutos",
+  async (params) => {
+    const { data } = await axios.get("/auto", params);
+    return data;
+  }
+);
 const initialState = {
   autos: {
     items: [],

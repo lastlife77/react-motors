@@ -26,7 +26,20 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const carEngines = await CarEngineModel.find();
-    res.json(carEngines);
+    let types = await Promise.all(
+      carEngines.map(async (item) => {
+        item = await CarEngineTypeController.getNameById(item.type);
+        return item;
+      })
+    );
+    let powers = carEngines.map((item) => {
+      return item.power;
+    });
+    let volumes = carEngines.map((item) => {
+      return item.volume;
+    });
+    types.unshift("Двигатель");
+    res.json([types, powers, volumes]);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -117,14 +130,14 @@ export const getAllIds = async () => {
 };
 
 export const getIds = async (types, powers, volumes) => {
-  let TypeIds, minPower, maxPower, minVolume, maxVolume;
+  let typeIds, minPower, maxPower, minVolume, maxVolume;
 
   //types
   if (types) {
     types = parseQuery(types);
-    carEngineTypeIds = CarEngineTypeController.getIdsByType(types);
+    typeIds = CarEngineTypeController.getIdsByType(types);
   } else {
-    carEngineTypeIds = CarEngineTypeController.getAllIds();
+    typeIds = CarEngineTypeController.getAllIds();
   }
   //powers
   if (powers) {

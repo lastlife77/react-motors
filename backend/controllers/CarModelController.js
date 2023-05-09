@@ -23,7 +23,11 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const carModels = await CarModelModel.find();
-    res.json(carModels);
+    let names = carModels.map((item) => {
+      return item.name;
+    });
+    names.unshift("Все модели");
+    res.json(names);
   } catch (err) {
     console.log(err);
     res.status(500).json({

@@ -55,7 +55,7 @@ export const getAll = async (req, res) => {
       year,
       country,
       price,
-    } = req.query;
+    } = req.body;
 
     let carModelIds,
       carBodyIds,
@@ -295,3 +295,22 @@ async function getAllYears() {
   });
   return years;
 }
+
+export const getYearsAndPrices = async (req, res) => {
+  try {
+    const autos = await AutoModel.find();
+    let years = autos.map((item) => {
+      return item.year;
+    });
+    years.unshift("Год выпуска");
+    let prices = autos.map((item) => {
+      return item.price;
+    });
+    res.json([years, prices]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось получить все авто",
+    });
+  }
+};

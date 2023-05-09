@@ -21,6 +21,20 @@ function Main() {
   useEffect(() => {
     dispatch(fetchAutos());
   }, []);
+
+  let [autoParams, setAutoParams] = useState({
+    carBrand: "",
+    carModel: "",
+    carBody: "",
+    carTransmission: "",
+    carEngine: "",
+    carEnginePower: "",
+    carEngineVolume: "",
+    carDrive: "",
+    year: "",
+    country: "",
+    price: "",
+  });
   return (
     <div className="mainPage">
       <Filter></Filter>

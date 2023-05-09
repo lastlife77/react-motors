@@ -22,7 +22,12 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const countries = await CountrylModel.find();
-    res.json(countries);
+    let names = countries.map((item) => {
+      return item.name;
+    });
+    names.unshift("Страны");
+
+    res.json(names);
   } catch (err) {
     console.log(err);
     res.status(500).json({
