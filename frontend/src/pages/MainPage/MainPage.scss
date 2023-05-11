@@ -4,11 +4,15 @@
     flex-direction: column;
     align-items: center;
     .autoCards{
+        width: 1250px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
         .loading{
+            width: 1250px;
+            justify-self: center;
+            align-self: center;
             display: flex;
             flex-direction: row;
             justify-content: center;

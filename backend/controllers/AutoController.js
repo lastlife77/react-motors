@@ -69,7 +69,6 @@ export const getAll = async (req, res) => {
 
     //carModel
     if (carBrand) {
-      carBrand = parseQuery(carBrand);
       let carBrandIds = await CarBrandController.getIdsByName(carBrand);
       carModelIds = await CarModelController.getIdsByCarBrandId(carBrandIds);
     } else if (carModel) {
@@ -80,7 +79,6 @@ export const getAll = async (req, res) => {
 
     //carBody
     if (carBody) {
-      carBody = parseQuery(carBody);
       carBodyIds = await CarBodyController.getIdsByType(carBody);
     } else {
       carBodyIds = await CarBodyController.getAllIds();
@@ -88,7 +86,6 @@ export const getAll = async (req, res) => {
 
     //carTransmission
     if (carTransmission) {
-      carTransmission = parseQuery(carTransmission);
       carTransmissionIds = await CarTransmissionController.getIdsByType(
         carTransmission
       );
@@ -109,7 +106,6 @@ export const getAll = async (req, res) => {
 
     //carDrive
     if (carDrive) {
-      carDrive = parseQuery(carDrive);
       carDriveIds = await CarDriveController.getIdsByType(carDrive);
     } else {
       carDriveIds = await CarDriveController.getAllIds();
@@ -117,7 +113,7 @@ export const getAll = async (req, res) => {
 
     //year
     if (year) {
-      years = parseQuery(year);
+      years = year;
     } else {
       years = await getAllYears();
     }
@@ -298,14 +294,14 @@ async function getAllYears() {
 
 export const getYearsAndPrices = async (req, res) => {
   try {
-    const autos = await AutoModel.find();
-    let years = autos.map((item) => {
-      return item.year;
-    });
+    const years = await AutoModel.distinct("year");
     years.unshift("Год выпуска");
-    let prices = autos.map((item) => {
-      return item.price;
-    });
+    let minPrice = await AutoModel.find().sort({ price: 1 }).limit(1);
+    minPrice = minPrice[0].price;
+    let maxPrice = await AutoModel.find().sort({ price: -1 }).limit(1);
+    maxPrice = maxPrice[0].price;
+    let prices = [minPrice, maxPrice];
+
     res.json([years, prices]);
   } catch (err) {
     console.log(err);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./DropDown.scss";
 import down from "./../../img/dropdown_down.svg";
 import check from "./../../img/check.svg";
@@ -18,20 +18,29 @@ function DropDownMany(props) {
 
           if (arr.length != 0) {
             setActiveItems(arr);
+            if (props.activeItem) {
+              props.activeItem(arr);
+            }
           } else {
             setActiveItems([items[0]]);
+            if (props.activeItem) {
+              props.activeItem(items[0]);
+            }
           }
         } else {
           if (activeItems[0] == items[0] || item == items[0]) {
             setActiveItems([item]);
+            if (props.activeItem) {
+              props.activeItem([item]);
+            }
           } else {
             setActiveItems([...activeItems, item]);
+            if (props.activeItem) {
+              props.activeItem([...activeItems, item]);
+            }
           }
         }
 
-        if (props.activeItem) {
-          props.activeItem(item);
-        }
         setIsActive(false);
       }}
       className={`drop_item ${
@@ -54,7 +63,11 @@ function DropDownMany(props) {
         }}
       >
         <p>
-          {activeItems.map((item, index) => (index == 0 ? item : `, ${item}`))}
+          {props.noActive != true
+            ? activeItems.map((item, index) =>
+                index == 0 ? item : `, ${item}`
+              )
+            : items[0]}
         </p>
         {activeItems[0] == items[0] ? (
           <img className="up-down_img" src={down}></img>
@@ -63,6 +76,9 @@ function DropDownMany(props) {
             onClick={(e) => {
               setActiveItems([items[0]]);
               setIsActive(false);
+              if (props.activeItem) {
+                props.activeItem(items[0]);
+              }
               e.stopPropagation();
             }}
             className="close_img"

@@ -28,6 +28,9 @@ function SliderFilter(props) {
     }
     minSlider.current.value = minInput.current.value;
     maxSlider.current.value = maxInput.current.value;
+    if (props.activeItem) {
+      props.activeItem(`${minSlider.current.value}-${maxSlider.current.value}`);
+    }
   };
 
   let handlerChangeSliderMinMax = () => {
@@ -38,6 +41,9 @@ function SliderFilter(props) {
     }
     minInput.current.value = minSlider.current.value;
     maxInput.current.value = maxSlider.current.value;
+    if (props.activeItem) {
+      props.activeItem(`${minSlider.current.value}-${maxSlider.current.value}`);
+    }
   };
 
   return (

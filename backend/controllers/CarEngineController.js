@@ -32,12 +32,17 @@ export const getAll = async (req, res) => {
         return item;
       })
     );
-    let powers = carEngines.map((item) => {
-      return item.power;
-    });
-    let volumes = carEngines.map((item) => {
-      return item.volume;
-    });
+    let minPower = await CarEngineModel.find().sort({ power: 1 }).limit(1);
+    minPower = minPower[0].power;
+    let maxPower = await CarEngineModel.find().sort({ power: -1 }).limit(1);
+    maxPower = maxPower[0].power;
+    let powers = [minPower, maxPower];
+
+    let minVolume = await CarEngineModel.find().sort({ volume: 1 }).limit(1);
+    minVolume = minVolume[0].volume;
+    let maxVolume = await CarEngineModel.find().sort({ volume: -1 }).limit(1);
+    maxVolume = maxVolume[0].volume;
+    let volumes = [minVolume, maxVolume];
     types.unshift("Двигатель");
     res.json([types, powers, volumes]);
   } catch (err) {
@@ -135,9 +140,9 @@ export const getIds = async (types, powers, volumes) => {
   //types
   if (types) {
     types = parseQuery(types);
-    typeIds = CarEngineTypeController.getIdsByType(types);
+    typeIds = await CarEngineTypeController.getIdsByType(types);
   } else {
-    typeIds = CarEngineTypeController.getAllIds();
+    typeIds = await CarEngineTypeController.getAllIds();
   }
   //powers
   if (powers) {
@@ -145,9 +150,13 @@ export const getIds = async (types, powers, volumes) => {
     minPower = powers[0];
     maxPower = powers[1];
   } else {
-    let minPowerEngine = CarEngineModel.find().sort({ power: 1 }).limit(1);
+    let minPowerEngine = await CarEngineModel.find()
+      .sort({ power: 1 })
+      .limit(1);
     minPower = minPowerEngine[0].power;
-    let maxPowerEngine = CarEngineModel.find().sort({ power: -1 }).limit(1);
+    let maxPowerEngine = await CarEngineModel.find()
+      .sort({ power: -1 })
+      .limit(1);
     maxPower = maxPowerEngine[0].power;
   }
 

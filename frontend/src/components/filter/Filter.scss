@@ -56,14 +56,15 @@
                 }
             }
         }
+        .loading{
+            justify-self: center;
+            align-self: center;
+        }
         .main{
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            .loading{
-                justify-self: center;
-                align-self: center;
-            }
+            
             .default{
                 display: flex;
                 flex-direction: row;

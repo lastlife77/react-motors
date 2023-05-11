@@ -4,7 +4,7 @@ import axios from "./../../axios";
 export const fetchAutos = createAsyncThunk(
   "/autos/fetchAutos",
   async (params) => {
-    const { data } = await axios.get("/auto", params);
+    const { data } = await axios.post("/auto/get", params);
     return data;
   }
 );

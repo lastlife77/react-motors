@@ -4,7 +4,7 @@ import { AutoController } from "../controllers/index.js";
 const router = new Router();
 
 router.post("/", AutoController.create);
-router.get("/", AutoController.getAll);
+router.post("/get", AutoController.getAll);
 router.get("/yearsAndPrices", AutoController.getYearsAndPrices);
 
 router.get("/:id", AutoController.getOne);

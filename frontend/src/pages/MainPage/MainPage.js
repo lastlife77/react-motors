@@ -37,7 +37,12 @@ function Main() {
   });
   return (
     <div className="mainPage">
-      <Filter></Filter>
+      <Filter
+        activeItems={(value) => {
+          setAutoParams(value);
+          dispatch(fetchAutos(value));
+        }}
+      ></Filter>
       <div className="autoCards">
         {isAutosLoading ? (
           <div className="loading">

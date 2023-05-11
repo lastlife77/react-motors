@@ -1,4 +1,5 @@
 import CarModelModel from "../models/CarModel.js";
+import { CarBrandController } from "./index.js";
 
 export const create = async (req, res) => {
   try {
@@ -23,11 +24,15 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const carModels = await CarModelModel.find();
-    let names = carModels.map((item) => {
-      return item.name;
-    });
-    names.unshift("Все модели");
-    res.json(names);
+    let models = await Promise.all(
+      carModels.map(async (item) => {
+        let name = item.name;
+        let brand = await CarBrandController.getNameById(item.carBrand);
+        return [brand, name];
+      })
+    );
+    models.unshift(["Все марки", "Все модели"]);
+    res.json(models);
   } catch (err) {
     console.log(err);
     res.status(500).json({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CheckBox from "../../UI_Library/Atoms/CheckBox/CheckBox.js";
 import DropDown from "../../UI_Library/Atoms/DropDown/DropDown.js";
@@ -14,6 +14,7 @@ import { fetchCarEngines } from "../../redux/slices/carEngines.js";
 import { fetchCarDrives } from "../../redux/slices/carDrives.js";
 import { fetchCountries } from "../../redux/slices/countries.js";
 import { fetchYearsAndPrices } from "../../redux/slices/yearsAndPrices.js";
+import { fetchAutos } from "../../redux/slices/autos.js";
 
 function Filter(props) {
   const dispatch = useDispatch();
@@ -70,13 +71,85 @@ function Filter(props) {
     dispatch(fetchYearsAndPrices());
   }, []);
 
+  let getFiltredAutos = async (
+    carBrand,
+    carModel,
+    carBody,
+    carTransmission,
+    carEngine,
+    carDrive,
+    country,
+    year,
+    price,
+    power,
+    volume
+  ) => {
+    if (carBrand == "Все марки") {
+      carBrand = "";
+      carModel = "";
+    }
+    if (carModel == "Все модели") {
+      carModel = "";
+    } else {
+      carBrand = "";
+    }
+    if (carBody == "Кузов") {
+      carBody = "";
+    }
+    if (carTransmission == "КПП") {
+      carTransmission = "";
+    }
+    if (carEngine == "Двигатель") {
+      carEngine = "";
+    }
+    if (carDrive == "Привод") {
+      carDrive = "";
+    }
+    if (country == "Страны") {
+      country = "";
+    }
+    if (year == "Год выпуска") {
+      year = "";
+    }
+    let values = {
+      carBrand: carBrand,
+      carModel: carModel,
+      carBody: carBody,
+      carTransmission: carTransmission,
+      carEngine: carEngine,
+      carEnginePower: power,
+      carEngineVolume: volume,
+      carDrive: carDrive,
+      year: year,
+      country: country,
+      price: price,
+    };
+    console.log(values, year);
+    props.activeItems(values);
+  };
+
   let PTSOwners = ["Владельцы по ПТС", 1, 2, 3, 4, 5, 6, 7];
   let PTS = ["ПТС", "Оригинал", "Дубликат"];
   let carAccidents = ["ДТП", "Без ДТП", "Участвовавшие в ДТП"];
 
   let [expertSearchIsOn, setExpertSearchIsOn] = useState(false);
   let [isNewAuto, setIsNewAuto] = useState(true);
-  let [brand, setBrand] = useState();
+
+  let [carBrand, setCarBrand] = useState("");
+  let [carModel, setCarModel] = useState("");
+  let [carBody, setCarBody] = useState("");
+  let [carTransmission, setCarTransmission] = useState("");
+  let [carEngine, setCarEngine] = useState("");
+  let [carDrive, setCarDrive] = useState("");
+  let [country, setCountry] = useState("");
+  let [year, setYear] = useState("");
+  let [price, setPrice] = useState("");
+  let [power, setPower] = useState("");
+  let [volume, setVolume] = useState("");
+
+  //reset
+  let [reset, setReset] = useState("false");
+
   return (
     <div className="filter-wrapper">
       <div className="filter-content">
@@ -122,32 +195,73 @@ function Filter(props) {
             <div className="default">
               <DropDown
                 activeItem={(activeItem) => {
-                  setBrand(activeItem);
+                  setCarBrand(activeItem);
                 }}
                 items={carBrands}
               ></DropDown>
               <div
                 className={`models ${
-                  brand == carBrands[0] ? "inactive" : undefined
+                  carBrand == carBrands[0] ? "inactive" : undefined
                 }`}
               >
                 <DropDownMany
-                  noActive={brand == carBrands[0] ? true : false}
-                  items={carModels}
+                  activeItem={(activeItem) => {
+                    setCarModel(activeItem);
+                  }}
+                  noActive={carBrand == carBrands[0] ? true : false}
+                  items={carModels
+                    .filter((item) => {
+                      if (item[0] == carBrand || item[0] == "Все марки") {
+                        return item;
+                      }
+                    })
+                    .map((item) => {
+                      return item[1];
+                    })}
                 ></DropDownMany>
               </div>
-              <DropDownMany items={carBodys}></DropDownMany>
-              <DropDownMany items={carTransmissions}></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setCarBody(activeItem);
+                }}
+                items={carBodys}
+              ></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setCarTransmission(activeItem);
+                }}
+                items={carTransmissions}
+              ></DropDownMany>
             </div>
             <div
               className={`${
                 !expertSearchIsOn ? "extended-hidden" : "extended"
               }`}
             >
-              <DropDownMany items={carEngines}></DropDownMany>
-              <DropDownMany items={carDrives}></DropDownMany>
-              <DropDownMany items={years}></DropDownMany>
-              <DropDownMany items={countries}></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setCarEngine(activeItem);
+                }}
+                items={carEngines}
+              ></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setCarDrive(activeItem);
+                }}
+                items={carDrives}
+              ></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setYear(activeItem);
+                }}
+                items={years}
+              ></DropDownMany>
+              <DropDownMany
+                activeItem={(activeItem) => {
+                  setCountry(activeItem);
+                }}
+                items={countries}
+              ></DropDownMany>
               {!isNewAuto ? (
                 <DropDownMany items={PTSOwners}></DropDownMany>
               ) : undefined}
@@ -158,21 +272,30 @@ function Filter(props) {
                 <DropDownMany items={carAccidents}></DropDownMany>
               ) : undefined}
               <SliderFilter
+                activeItem={(activeItem) => {
+                  setPrice(activeItem);
+                }}
                 title="Цена, руб"
-                min={737500}
-                max={24900000}
+                min={prices[0]}
+                max={prices[1]}
                 step={10000}
               ></SliderFilter>
               <SliderFilter
+                activeItem={(activeItem) => {
+                  setVolume(activeItem);
+                }}
                 title="Объем двигателя, л"
-                min={0.0}
-                max={4.5}
+                min={volumes[0]}
+                max={volumes[1]}
                 step={0.1}
               ></SliderFilter>
               <SliderFilter
+                activeItem={(activeItem) => {
+                  setPower(activeItem);
+                }}
                 title="Мощность двигателя, л.с"
-                min={33}
-                max={625}
+                min={powers[0]}
+                max={powers[1]}
                 step={1}
               ></SliderFilter>
             </div>
@@ -183,11 +306,43 @@ function Filter(props) {
           </div>
         )}
         <div className="footer">
-          <div className="footer_block reset">
+          <div
+            className="footer_block reset"
+            onClick={() => {
+              dispatch(fetchCarBodys());
+              setCarBrand("");
+              setCarModel("");
+              setCarBody("");
+              setCarTransmission("");
+              setCarEngine("");
+              setCarDrive("");
+              setCountry("");
+              setYear("");
+              setPrice("");
+              setPower("");
+              setVolume("");
+            }}
+          >
             <p>Сбросить все параметры фильтра</p>
           </div>
           <div className="footer_block show">
-            <button>
+            <button
+              onClick={() => {
+                getFiltredAutos(
+                  carBrand,
+                  carModel,
+                  carBody,
+                  carTransmission,
+                  carEngine,
+                  carDrive,
+                  country,
+                  year,
+                  price,
+                  power,
+                  volume
+                );
+              }}
+            >
               <p>ПОКАЗАТЬ 2082 АВТО</p>
             </button>
           </div>
